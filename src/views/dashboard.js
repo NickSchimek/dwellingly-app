@@ -4,19 +4,30 @@ import { MODULE_DATA, ACCESS_REQUEST_DATA } from '../components/DashboardModule/
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
 import RequestItem from '../components/RequestItem';
+import axios from 'axios';
 
 export class Dashboard extends React.Component {
     constructor(props) {
         super(props);
+        console.dir(props, { depth: null });
         this.state = {
             modalActive: false,
             areStaffAssigned: false,
         }
     }
 
+    componentDidMount() {
+        axios.post(
+            '/',
+            { userrole: "pending" },
+            { headers: { "Authorization": `Bearer {context.user.accessJwt}` } })
+            .then(result => console.log(result.ok));
+    }
+
     handleAddClick = (id) => {
         console.log('handle add access', id);
         //TODO: route to add page with id (or switch the click handler within requestItem to a traditional link)
+        this.props.history.push('/request-access');
     }
 
     handleDeclineClick = (id) => {

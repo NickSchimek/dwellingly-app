@@ -9,7 +9,7 @@ import { Terms } from './views/terms';
 import { PrivateRoute, auth } from './Auth';
 import Header from './components/Header/index';
 import { AddProperty } from './views/addProperty';
-
+import RequestAccess from './views/requestAccess';
 
 export const UserContext = React.createContext();
 
@@ -148,6 +148,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/staff' component={Dashboard} />
               <PrivateRoute exact path='/emergency' component={Dashboard} />
               <PrivateRoute exact path='/settings' component={Dashboard} />
+              <PrivateRoute exact path='/request-access' component={RequestAccess} />
             </Switch>
           </div>
         </BrowserRouter>
