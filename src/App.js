@@ -10,8 +10,7 @@ import { PrivateRoute, auth } from './Auth';
 import Header from './components/Header/index';
 import { AddProperty } from './views/addProperty';
 import RequestAccess from './views/requestAccess';
-
-export const UserContext = React.createContext();
+import UserContext from './UserContext';
 
 const parseJwt = ( token ) => {
   var base64Payload = token.split( '.' )[1];

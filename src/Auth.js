@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import * as axios from 'axios';
-import { UserContext } from './App';
+import UserContext from './UserContext';
 
 export const auth = {
   isAuthenticated: false,

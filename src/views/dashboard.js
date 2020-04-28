@@ -5,23 +5,30 @@ import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
 import RequestItem from '../components/RequestItem';
 import axios from 'axios';
+import UserContext from '../UserContext';
 
 export class Dashboard extends React.Component {
+    static contextType = UserContext;
+
     constructor(props) {
         super(props);
-        console.dir(props, { depth: null });
         this.state = {
             modalActive: false,
             areStaffAssigned: false,
-        }
+            usersPending: []
+        };
     }
 
     componentDidMount() {
         axios.post(
-            '/',
+            `${process.env.REACT_APP_API_URL}/users/role`,
             { userrole: "pending" },
-            { headers: { "Authorization": `Bearer {context.user.accessJwt}` } })
-            .then(result => console.log(result.ok));
+            {
+                headers: {
+                    Authorization: `Bearer ${this.context.user.accessJwt}`
+                }
+            })
+            .then(res => this.setState(s => ({ ...s, usersPending: res.data.users })));
     }
 
     handleAddClick = (id) => {
@@ -52,6 +59,7 @@ export class Dashboard extends React.Component {
     }
 
     render() {
+        console.log({ s: this.state });
         return (
             <>
                 <div className="dashboard__container">
@@ -119,7 +127,7 @@ export class Dashboard extends React.Component {
                                 title="Request for Access"
                             >
                                 {
-                                    ACCESS_REQUEST_DATA.map((requestItemData, index) => {
+                                    this.state.usersPending.map((requestItemData, index) => {
                                         return (<RequestItem key={`requestItem--${index}`} data={requestItemData} onDeclineClick={this.handleDeclineClick} onAddClick={this.handleAddClick} />);
                                     })
                                 }
